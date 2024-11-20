@@ -25,7 +25,7 @@ async def train_model(model, xs_users, xs_courses, ys):
   )
 
   # Save the trained model after initial training
-  model.save('./saved/my_model_2.keras')
+  model.save('./saved/best_model_2.keras')
 
   # Calculate Precision, Recall, F1-Score
   y_pred = model.predict([xs_users, xs_courses])

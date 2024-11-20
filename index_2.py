@@ -14,8 +14,8 @@ from models.baseModel import train_model, retrain_model
 async def main():
     try:
         # Load and validate data
-        courses = await load_courses()
-        users = await load_users()
+        courses = await load_courses("./data/course.json")
+        users = await load_users("./data/user.json")
 
         # Ensure that the loaded data is valid
         if not courses or not users:
@@ -28,15 +28,15 @@ async def main():
         mock_data = generate_sync_data(user_vectors, course_vectors)
         xs_users, xs_courses, ys = mock_data['xsUsers'], mock_data['xsCourses'], mock_data['ys']
 
-        user_vector_length = len(user_vectors[0]['vector']) if user_vectors else 0
-        course_vector_length = len(course_vectors[0]['vector']) if course_vectors else 0
-        model = build_foundation_model(user_vector_length, course_vector_length, 1e-4)
+        # user_vector_length = len(user_vectors[0]['vector']) if user_vectors else 0
+        # course_vector_length = len(course_vectors[0]['vector']) if course_vectors else 0
+        # model = build_foundation_model(user_vector_length, course_vector_length, 1e-4)
 
-        # Train the model
-        results = await train_model(model, xs_users, xs_courses, ys)
+        # # Train the model
+        # results = await train_model(model, xs_users, xs_courses, ys)
 
-        # Show training chart result
-        plot_training_history(results)
+        # # Show training chart result
+        # plot_training_history(results)
 
         # Retrain the model after saving
         resultReloaded = await retrain_model(xs_users, xs_courses, ys, 1e-3)
@@ -44,9 +44,9 @@ async def main():
         # Show re-training chart result
         plot_training_history(resultReloaded)
 
-        # # Example recommendation for first user
-        # recommendations = recommend_courses(model, user_vectors[1]['vector'], course_vectors)
-        # print("Top 5 recommendations for user 1:", recommendations)
+        # Example recommendation for first user
+        recommendations = recommend_courses(model, user_vectors[1]['vector'], course_vectors)
+        print("Top 5 recommendations for user 1:", recommendations)
 
     except Exception as e:
         print(f"Error in main: {e}")

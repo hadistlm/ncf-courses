@@ -63,7 +63,7 @@ async def retrain_model(xs_users, xs_courses, ys, learningRT=1e-3):
   print(f'Start re-training the model at {datetime.now().strftime("%H:%M:%S")}')
 
   # Reload the saved model
-  model = tf.keras.models.load_model('./saved/my_model_2.keras')
+  model = tf.keras.models.load_model('./saved/best_model_2.keras')
 
   # Optionally modify hyperparameters like learning rate
   model.compile(

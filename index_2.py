@@ -28,12 +28,12 @@ async def main():
         mock_data = generate_sync_data(user_vectors, course_vectors)
         xs_users, xs_courses, ys = mock_data['xsUsers'], mock_data['xsCourses'], mock_data['ys']
 
-        # # Train the model
-        # model = build_foundation_model(xs_users, xs_courses, 1e-4)
-        # results = await train_model(model, xs_users, xs_courses, ys)
+        # Train the model
+        model = build_foundation_model(user_vectors, course_vectors, 1e-4)
+        results = await train_model(model, xs_users, xs_courses, ys)
 
-        # # Show training chart result
-        # plot_training_history(results)
+        # Show training chart result
+        plot_training_history(results)
 
         # Retrain the model after saving
         resultReloaded = await retrain_model(xs_users, xs_courses, ys, 1e-3)

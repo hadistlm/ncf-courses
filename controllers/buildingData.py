@@ -2,9 +2,11 @@ import tensorflow as tf
 from datetime import datetime
 
 # Build the Neural Collaborative Filtering (NCF) model
-def build_foundation_model(user_vector_length, course_vector_length, learningRT=1e-3, matrix_size = 6, layer_weight = 0.01):
+def build_foundation_model(user_vectors, course_vectors, learningRT=1e-3, matrix_size = 6, layer_weight = 0.01):
   print(f'Start build model data at {datetime.now().strftime("%H:%M:%S")}')
 
+  user_vector_length = len(user_vectors[0]['vector']) if user_vectors else 0
+  course_vector_length = len(course_vectors[0]['vector']) if course_vectors else 0
   user_input = tf.keras.Input(shape=(user_vector_length,))
   course_input = tf.keras.Input(shape=(course_vector_length,))
 

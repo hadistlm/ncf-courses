@@ -28,11 +28,8 @@ async def main():
         mock_data = generate_sync_data(user_vectors, course_vectors)
         xs_users, xs_courses, ys = mock_data['xsUsers'], mock_data['xsCourses'], mock_data['ys']
 
-        # user_vector_length = len(user_vectors[0]['vector']) if user_vectors else 0
-        # course_vector_length = len(course_vectors[0]['vector']) if course_vectors else 0
-        # model = build_foundation_model(user_vector_length, course_vector_length, 1e-4)
-
         # # Train the model
+        # model = build_foundation_model(xs_users, xs_courses, 1e-4)
         # results = await train_model(model, xs_users, xs_courses, ys)
 
         # # Show training chart result

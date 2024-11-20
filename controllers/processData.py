@@ -34,6 +34,7 @@ def preprocess_data(users, courses):
 
     course_vectors.append({
       'courseId': course.get('id', f'unknown_course_id_{i}'),
+      'title': course.get('title'),
       'category': category.lower(),
       'vector': [rating, viewers]
     })

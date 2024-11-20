@@ -42,7 +42,7 @@ async def main():
         plot_training_history(resultReloaded)
 
         # Example recommendation for first user
-        recommendations = recommend_courses(model, user_vectors[1]['vector'], course_vectors)
+        recommendations = recommend_courses(user_vectors[1]['vector'], course_vectors)
         print("Top 5 recommendations for user 1:", recommendations)
 
     except Exception as e:

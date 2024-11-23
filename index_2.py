@@ -44,7 +44,7 @@ async def main():
         xs_users, xs_courses, ys = mock_data['xsUsers'], mock_data['xsCourses'], mock_data['ys']
 
         # Train the model
-        model = build_foundation_model(user_vectors, course_vectors, 5e-4, 16, 0.01, 0.2)
+        model = build_foundation_model(user_vectors, course_vectors, 1e-3, 16, 0.01, 0.2)
         results = await train_model(model, xs_users, xs_courses, ys)
 
         # Show training chart result
@@ -57,8 +57,8 @@ async def main():
         plot_training_history(resultReloaded)
 
         # Example recommendation for first user
-        recommendations = recommend_courses(user_vectors[1]['vector'], course_vectors)
-        print("\nTop 5 recommendations for user 1: \n")
+        recommendations = recommend_courses(user_vectors[4]['vector'], course_vectors)
+        print("\nTop 5 recommendations for user id 5: \n")
         print(*recommendations, sep='\n')
 
     except Exception as e:

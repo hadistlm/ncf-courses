@@ -1,5 +1,6 @@
 from datetime import datetime
 from helpers.sanitizeNum import extract_numeric_value
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Preprocess the data
 def preprocess_data(users, courses):
@@ -42,3 +43,18 @@ def preprocess_data(users, courses):
   print(f'End process data at {datetime.now().strftime("%H:%M:%S")}')
 
   return {'userVectors': user_vectors, 'courseVectors': course_vectors}
+
+def generate_category_embeddings(courses):
+  # Extract category names from courses
+  categories = [course['category'] for course in courses]
+
+  # Apply TF-IDF Vectorizer to categories
+  vectorizer = TfidfVectorizer(max_features=10)
+  category_embeddings = vectorizer.fit_transform(categories).toarray()
+
+  # Add these embeddings to the course vectors
+  for course, embedding in zip(courses, category_embeddings):
+    # Assuming course['vector'] is a list, extend it with the category embedding
+    course['vector'].extend(embedding.tolist())
+  
+  return courses

@@ -4,7 +4,7 @@ from helpers.drawPlotStatistics import plot_training_history
 # separated functions
 from packages.buildCourses import load_courses
 from packages.buildUsers import load_users
-from controllers.processData import preprocess_data
+from controllers.processData import preprocess_data, generate_category_embeddings
 from controllers.mappingData import generate_sync_data
 from controllers.buildingData import build_foundation_model
 from controllers.recommendation import recommend_courses
@@ -25,18 +25,22 @@ async def main():
         data = preprocess_data(users, courses)
         user_vectors, course_vectors = data['userVectors'], data['courseVectors']
 
+        # Vectorize course data with TF-IDF
+        course_vectors = generate_category_embeddings(course_vectors)
+
+        # generate matrix and vectorize all the data
         mock_data = generate_sync_data(user_vectors, course_vectors)
         xs_users, xs_courses, ys = mock_data['xsUsers'], mock_data['xsCourses'], mock_data['ys']
 
         # Train the model
-        model = build_foundation_model(user_vectors, course_vectors, 1e-4)
+        model = build_foundation_model(user_vectors, course_vectors, 5e-4, 16, 0.01, 0.2)
         results = await train_model(model, xs_users, xs_courses, ys)
 
         # Show training chart result
         plot_training_history(results)
 
         # Retrain the model after saving
-        resultReloaded = await retrain_model(xs_users, xs_courses, ys, 1e-3)
+        resultReloaded = await retrain_model(xs_users, xs_courses, ys, 1e-4)
 
         # Show re-training chart result
         plot_training_history(resultReloaded)

@@ -18,6 +18,10 @@ def generate_sync_data(user_vectors, course_vectors):
       1 if course['category'] in user_interests else 0
       for course in course_vectors
     ], dtype=np.float32)
+
+    # Apply weights based on the category if it's a match
+    labels = labels * 2
+    
     ys.append(labels)
   
   # Flatten `ys` into a single vector

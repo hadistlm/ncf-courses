@@ -6,7 +6,7 @@ from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCh
 from sklearn.metrics import precision_score, recall_score, f1_score
 
 # Train the model with early stopping and learning rate reduction
-async def train_model(model, xs_users, xs_courses, ys):
+async def train_model(model, xs_users, xs_courses, ys, preferedBatch = 256):
   print(f'Start training model at {datetime.now().strftime("%H:%M:%S")}')
 
   try:
@@ -19,7 +19,7 @@ async def train_model(model, xs_users, xs_courses, ys):
       [xs_users, xs_courses],
       ys,
       epochs=50,
-      batch_size=256,
+      batch_size=preferedBatch,
       validation_split=0.2,
       class_weight=class_weight,
       callbacks=[reduce_lr, early_stopping, checkpoint]
@@ -62,7 +62,7 @@ async def train_model(model, xs_users, xs_courses, ys):
   return history
 
 # Retrain the model after saving
-async def retrain_model(xs_users, xs_courses, ys, learningRT=1e-3):
+async def retrain_model(xs_users, xs_courses, ys, learningRT=1e-3, preferedBatch = 256):
   print(f'Start re-training the model at {datetime.now().strftime("%H:%M:%S")}')
 
   try:
@@ -81,7 +81,7 @@ async def retrain_model(xs_users, xs_courses, ys, learningRT=1e-3):
       [xs_users, xs_courses],  # Use new or same data
       ys,
       epochs=50,  # Number of epochs for retraining
-      batch_size=256,
+      batch_size=preferedBatch,
       validation_split=0.2,
       class_weight={0: 1.0, 1: 5.0},
       callbacks=[

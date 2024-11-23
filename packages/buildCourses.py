@@ -26,6 +26,7 @@ async def load_courses(file_path='./course.json'):
       courses.append({
         'id': d.get('ID', f'unknown_id_{i}'),  # Provide a fallback ID if missing
         'category': d.get('Category', 'Unknown'),
+        'link': d.get('URL', '-'),
         'rating': rating,
         'view': view,
         'title': d.get('Title', 'Unknown'),

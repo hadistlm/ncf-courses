@@ -7,7 +7,7 @@ from packages.buildUsers import load_users
 from controllers.processData import preprocess_data, generate_category_embeddings
 from controllers.mappingData import generate_sync_data
 from controllers.buildingData import build_foundation_model
-from controllers.recommendation import recommend_courses
+from controllers.recommendation import recommend_courses, recommendation_display
 from models.baseModel import train_model, retrain_model
 
 async def validateData():
@@ -58,8 +58,8 @@ async def main():
 
         # Example recommendation for first user
         recommendations = recommend_courses(user_vectors[4]['vector'], course_vectors)
-        print("\nTop 5 recommendations for user id 5: \n")
-        print(*recommendations, sep='\n')
+        # display the recommendation result
+        recommendation_display(recommendations)
 
     except Exception as e:
         print(f"Error in main: {e}")

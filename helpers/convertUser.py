@@ -12,7 +12,7 @@ if isinstance(data, list):
     transformed_list = []
     
     # Loop through each entry in the list
-    for entry in data[:1000]:
+    for entry in data[:500]:
         if isinstance(entry, dict):  # Check if the entry is a dictionary
             # Randomly determine if interests should be empty (20% chance)
             if random.random() < 0.4:  # 40% chance

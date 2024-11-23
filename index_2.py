@@ -10,19 +10,30 @@ from controllers.buildingData import build_foundation_model
 from controllers.recommendation import recommend_courses
 from models.baseModel import train_model, retrain_model
 
-# Bootstrap the process
-async def main():
-    try:
-        # Load and validate data
+async def validateData():
+    # Load and validate data
         courses = await load_courses("./data/course.json")
         users = await load_users("./data/user.json")
 
         # Ensure that the loaded data is valid
         if not courses or not users:
             print("No valid courses or users data found.")
+            exit(0)
             return
+        
+        return {
+            'courses': courses,
+            'users': users
+        }
 
-        data = preprocess_data(users, courses)
+# Bootstrap the process
+async def main():
+    try:
+        # Load And validate data
+        loadedData = await validateData()
+
+        # Preprocess data structure
+        data = preprocess_data(loadedData['users'], loadedData['courses'])
         user_vectors, course_vectors = data['userVectors'], data['courseVectors']
 
         # Vectorize course data with TF-IDF

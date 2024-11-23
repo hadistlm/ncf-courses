@@ -27,7 +27,7 @@ def generate_sync_data(user_vectors, course_vectors):
   xs_users_np = np.repeat(user_vectors_np, len(course_vectors), axis=0)
   xs_courses_np = np.tile(course_vectors_np, (len(user_vectors), 1))
 
-  print(f'End process data at {datetime.now().strftime("%H:%M:%S")}')
+  print(f'End mapping data at {datetime.now().strftime("%H:%M:%S")}')
   
   # Convert back to TensorFlow tensors
   return {

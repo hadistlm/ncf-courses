@@ -43,7 +43,8 @@ async def main():
 
         # Example recommendation for first user
         recommendations = recommend_courses(user_vectors[1]['vector'], course_vectors)
-        print("Top 5 recommendations for user 1:", recommendations)
+        print("\nTop 5 recommendations for user 1: \n")
+        print(*recommendations, sep='\n')
 
     except Exception as e:
         print(f"Error in main: {e}")
